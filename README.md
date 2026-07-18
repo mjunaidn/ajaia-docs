@@ -5,7 +5,7 @@ Developer take-home assignment. Users can create and format rich-text documents,
 import `.txt` / `.md` / `.docx` files as new documents, and share documents with other
 seeded users with view or edit permissions.
 
-Live deployment: **`<TODO: paste Render URL here after deploy>`**
+Live deployment: **https://ajaia-docs-kkir.onrender.com**
 
 ## Features
 
@@ -116,18 +116,33 @@ unsupported types.
 
 ## Deployment
 
-Deployed as a single Node service on [Render](https://render.com):
+Deployed as a single Node service on [Render](https://render.com), free instance
+type, at **https://ajaia-docs-kkir.onrender.com**:
 
-- **Build command:** `npm install && npm run build`
+- **Build command:** `npm install --include=dev && npm run build`
 - **Start command:** `npm start`
+- **Node version:** pinned to 20 via `.node-version` (see note below)
 - The server (`server/src/app.js`) serves the built client (`client/dist`) as static
   files and handles `/api/*` — one deployable, no separate frontend host.
+
+**Two things worth knowing if you redeploy this yourself:**
+
+1. **Node version is pinned to 20.** Render defaults to the newest available Node if
+   `engines.node` has no upper bound. `better-sqlite3`'s native module didn't have a
+   prebuilt binary for that newest version and failed to compile from source against
+   its changed V8 API. A `.node-version` file pins the build to Node 20 (LTS, has
+   prebuilt binaries) to avoid this.
+2. **`NODE_ENV=production` requires `--include=dev` on the build command.** With
+   `NODE_ENV=production` set (recommended for the running server), `npm install` skips
+   `devDependencies` — which includes `vite`, needed to build the client. The build
+   command explicitly re-includes them.
 
 **Known limitation:** Render's free tier has no persistent disk, so the SQLite file is
 reset on every deploy/restart. Seeded users are recreated automatically on boot; any
 documents created during a review session will not survive a redeploy. See
 [ARCHITECTURE.md](ARCHITECTURE.md) for the production fix (Postgres or a persistent
-disk).
+disk). The free instance also spins down after inactivity — the first request after
+idle time can take ~50 seconds to respond while it wakes up.
 
 ## What's working / what's not
 

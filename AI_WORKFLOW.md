@@ -62,6 +62,16 @@ product/engineering quality) maps to a concrete, checkable piece of the codebase
   React app) and `/api/health` + `/api/users` confirmed the single-deployable-service
   architecture works end-to-end, before committing to describing that architecture in
   README.md/ARCHITECTURE.md.
+- **The actual Render deploy failed twice, and both failures were diagnosed from real
+  build logs, not guessed at.** First attempt: Render picked the newest available Node
+  (26.5.0) since `engines.node` only specified a floor; `better-sqlite3`'s prebuilt
+  binary didn't exist for it and the from-source compile failed against a changed V8
+  API. Fixed by pinning to Node 20 via `.node-version`. Second attempt, after that fix:
+  the build then failed with `vite: not found` — setting `NODE_ENV=production` as an
+  env var made `npm install` skip `devDependencies` (which includes `vite`) during the
+  build step. Fixed by adding `--include=dev` to the build command. Both fixes came
+  from reading the actual Render build logs after each failed deploy, not from
+  speculation about what might be wrong.
 
 ## What AI did not decide unilaterally
 

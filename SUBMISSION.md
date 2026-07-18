@@ -14,7 +14,8 @@ collaborative document editor.
 - **[AI_WORKFLOW.md](AI_WORKFLOW.md)** — how AI (Claude Code) was used to build and
   verify this project.
 - **This file (SUBMISSION.md)** — what's included, per this checklist.
-- **Live product URL:** `<TODO: paste Render URL here after deploy>`
+- **Live product URL:** https://ajaia-docs-kkir.onrender.com (free Render instance —
+  spins down after inactivity; first load after idle can take ~50s)
 - **Test accounts (no passwords — mocked auth, see README):**
   - `alex@ajaia.test` — seeded owner of the demo document
   - `jordan@ajaia.test` — used to demonstrate the shared-with-you flow
