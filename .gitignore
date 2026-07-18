@@ -1,0 +1,9 @@
+node_modules/
+server/data/
+client/dist/
+*.log
+.DS_Store
+.env
+.env.local
+.idea/
+.claude/

@@ -1,0 +1,25 @@
+{
+  "name": "ajaia-docs",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Lightweight collaborative document editor - Ajaia AI-Native Full Stack Developer assignment",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "cross-env PORT=4000 npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "dev": "concurrently -k -n SERVER,CLIENT -c blue,green \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server",
+    "test": "npm test --workspace server",
+    "seed": "npm run seed --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
